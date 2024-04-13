@@ -1,21 +1,43 @@
 version: '3.1'
 
 services:
-
+  flaskapp:
+    image: gg951x/learnings:2.0
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - d:/logs:/var/logs
+    networks:
+      - flasknet
   mongo:
     image: mongo
+    ports:
+      - 27017:27017
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: apollo13
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - flasknet
   mongo-express:
-    image: mongo-express
-    restart: always
+    image: mongo-express    
     ports:
       - 8081:8081
+    restart: always
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: apollo13
       ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+    networks:
+      - flasknet
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  flasknet:
+    driver: bridge

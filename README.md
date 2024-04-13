@@ -4,7 +4,7 @@ Create a learning python flask application which is build on docker and connects
 
 app.py -> Is the primary application for python flask applicaion. 
 
-** For running it locally without running the application in the docker container** 
+**For running it locally without running the application in the docker container** 
 
 1. Clone the repository from github
 
@@ -44,7 +44,7 @@ Once the docker images for mongo and mongo DB are running
     python app.y --> The application will run on localhost:8080 port
 ```
 
-** For Running the application and entire ecosystem in docker container**
+**For Running the application and entire ecosystem in docker container**
 
 Either you can change the required values in app.py as per your requirement and then build the application locally using docker build command. 
 
@@ -61,7 +61,7 @@ For anything issues you can check logs using
 docker ps ( for listing all the running containers)
 docker logs <container name>
 ```
-** 3rd way of directly pulling the already created flaskapp image and running it**
+**3rd way of directly pulling the already created flaskapp image and running it**
 
 1. I have build the image and pushed it into docker.io personal container registry, you can directly pull it. 
 
@@ -74,4 +74,21 @@ docker pull gg951x/learnings:2.0
 4. run the image
 ```
 docker run -d -p 8080:8080 -v d:/logs:/var/log --net testnet --name flaskapp flaskapp:2.0 
+```
+
+**Easiest Way of using this image**
+
+1. There is docker-compose.yaml file the repo.
+
+Ensure your have docker and docker-compose installed. Change directory to the repo
+```
+docker-compose up
+docker ps ( to check if all containers are running) 
+python test.py (to enter the test data)
+
+```
+This will bring up all the images together in the same docker network and you will be able to access it on
+```
+http://localhost:8080 --> Flaskapp
+htpp://localhost:8081 --> mongo-express - UI for accessing mongo DB -> admin:pass is default credentails. 
 ```
